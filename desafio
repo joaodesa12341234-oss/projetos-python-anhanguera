@@ -1,0 +1,34 @@
+# automatizar ingressos de cinema por categorias de idades
+idade = int(input('digite sua idade: '))
+qt_ing_1 = qt_ing_2 = qt_ing_3 = 10
+
+if idade < 12:
+    print ('recomendamos o filme infantil 1')
+    r1 = str(input('comfirmar compra[S/N]?')).upper()[0]
+    if r1 == 'S':
+        qt_ing_1-=1
+        print(f'compra comfirmada, restam {qt_ing_1} ingressos')
+    else:
+        print(f'compra não comfirmada, restam {qt_ing_1} ingressos')
+    
+elif idade >= 12 and idade < 18:
+    print ('recomendamos o filme infantil 2')
+    r2 = str(input('comfirmar compra[S/N]?')).upper()[0]
+    if r2 == 'S':
+        qt_ing_2-=1
+        print(f'compra comfirmada, restam {qt_ing_2} ingressos')
+    else:
+        print(f'compra não comfirmada, restam {qt_ing_2} ingressos')
+else:
+    print ('recomendamos o filme 3')
+    r3 = str(input('comfirmar compra[S/N]?')).upper()[0]
+    if r3 == 'S':
+        qt_ing_3-=1
+        print(f'compra comfirmada, restam {qt_ing_3} ingressos')
+    else:
+        print(f'compra não comfirmada, restam {qt_ing_3} ingressos')
+
+
+
+
+
