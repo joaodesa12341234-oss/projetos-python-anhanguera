@@ -1,0 +1,27 @@
+#grafico em linha
+
+import matplotlib.pyplot as plt
+
+x = [1,2,3,4,5,]
+y = [1,2,3,4,5]
+
+plt.plot(x,y)
+
+plt.xlabel('eixo x')
+plt.xlabel('eixo y')
+
+plt.title('exemplo de gráfico de linha')
+
+plt.show()
+
+#grafico em barra.
+meses = ['janeiro','feverieor', 'março', 'abril','maio']
+vendas = [120,90,150,80,200]
+
+plt.bar(meses,vendas, color='red')
+
+plt.xlabel('mês')
+plt.xlabel('vendas (em unidades)')
+plt.title('vendas mensais')
+
+plt.show()
