@@ -76,3 +76,60 @@ for pessoa in nao_confirmados:
 
 # Enviar lembretes aos não confirmados
 print('\nEnviando lembretes para os convidados que ainda não confirmaram.')
+
+
+""" trabalho do modulo 1 """
+
+#O sistema deve permitir que o usuário insira as notas dos alunos.
+#As notas devem ser armazenadas em uma lista. Cálculo da Média:
+#O sistema deve calcular a média das notas inseridas. Determinação da Situação:
+#Se a média for maior ou igual a 7, o aluno está aprovado.
+#Se a média for menor que 7, o aluno está reprovado. Relatório Final:
+#Exibir as notas inseridas, a média e a situação do aluno.
+
+
+notas = []
+
+for i in range (4):
+  nota = float(input(f'digite a {i+1}° nota:  '))
+  notas.append(nota)
+
+for i, nota in enumerate(notas):
+    print(f"{i+1}ª nota: {nota}")
+
+
+
+media = sum(notas) / len(notas)
+print (f' sua média foi: {media}')
+
+
+
+if media >= 7:
+  print('parabens você foi aprovado')
+else:
+  print('lamentamos, você não foi aprovado')
+
+
+
+#exercicio de fixação
+
+class pessoa:
+  def __init__(self, nome, idade, genero):
+    self.nome = nome
+    self.idade = int(idade)
+    self.genero = genero
+
+
+  def comprimentar (self):
+    return f"olá, meu nome é {self.nome}"
+    
+  def aniversario(self):
+    self.idade += 1
+
+p1 = pessoa('joao', '30', 'masculino',)
+
+print(p1.comprimentar())
+print(f'idade: {p1.idade}')
+
+p1.aniversario()
+print(f'idade nova: {p1.idade}')
