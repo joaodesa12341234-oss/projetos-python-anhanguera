@@ -1,0 +1,108 @@
+
+# 1. Conectar ao banco de dados (ou criar em memória /
+# 2. Criar a tabela 'vendas1'
+# 3. Inserir dados de teste
+# 4. Confirmar transação
+
+import sqlite3
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 1. Conectar ao banco de dados (ou criar em memória / arquivo local)
+conexao = sqlite3.connect('dados_vendas.db')
+cursor = conexao.cursor()
+
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS vendas1 (
+    id_venda INTEGER PRIMARY KEY AUTOINCREMENT,
+    data_venda DATE,
+    produto TEXT,
+    categoria TEXT,
+    valor_venda REAL
+)
+''')
+
+
+cursor.execute('''
+INSERT INTO vendas1 (data_venda, produto, categoria, valor_venda) VALUES
+('2023-01-01', 'Produto A', 'Eletrônicos', 1500.00),
+('2023-01-05', 'Produto B', 'Roupas', 350.00),
+('2023-02-10', 'Produto C', 'Eletrônicos', 1200.00),
+('2023-03-15', 'Produto D', 'Livros', 200.00),
+('2023-03-20', 'Produto E', 'Eletrônicos', 800.00),
+('2023-04-02', 'Produto F', 'Roupas', 400.00),
+('2023-05-05', 'Produto G', 'Livros', 150.00),
+('2023-06-10', 'Produto H', 'Eletrônicos', 1000.00),
+('2023-07-20', 'Produto I', 'Roupas', 600.00),
+('2023-08-25', 'Produto J', 'Eletrônicos', 700.00),
+('2023-09-30', 'Produto K', 'Livros', 300.00),
+('2023-10-05', 'Produto L', 'Roupas', 450.00),
+('2023-11-15', 'Produto M', 'Eletrônicos', 900.00),
+('2023-12-20', 'Produto N', 'Livros', 250.00);
+''')
+
+
+conexao.commit()
+
+
+df_vendas = pd.read_sql_query("SELECT * FROM vendas1", conexao)
+df_vendas['data_venda'] = pd.to_datetime(df_vendas['data_venda'])
+df_vendas['mes_ano'] = df_vendas['data_venda'].dt.to_period('M')
+print("Informações do DataFrame:")
+df_vendas.info()
+print("\nEstatísticas descritivas do valor de venda:")
+print(df_vendas['valor_venda'].describe())
+
+
+
+
+sns.set_theme(style="whitegrid")
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# """GRAFICOS""" 
+
+vendas_categoria = df_vendas.groupby('categoria')['valor_venda'].sum().reset_index()
+sns.barplot(
+    data=vendas_categoria, 
+    x='categoria', 
+    y='valor_venda', 
+    palette='Blues_r', 
+    ax=axes[0]
+)
+
+axes[0].set_title('Faturamento Total por Categoria (2023)')
+axes[0].set_ylabel('Faturamento (R$)')
+axes[0].set_xlabel('Categoria')
+
+# Adicionar rótulos nas barras
+for p in axes[0].patches:
+    axes[0].annotate(f'R$ {p.get_height():,.2f}', 
+                    (p.get_x() + p.get_width() / 2., p.get_height()), 
+                    ha='center', va='center', xytext=(0, 5), textcoords='offset points')
+
+
+
+vendas_mensais = df_vendas.groupby('mes_ano')['valor_venda'].sum().reset_index()
+vendas_mensais['mes_ano_str'] = vendas_mensais['mes_ano'].astype(str)
+
+sns.lineplot(
+    data=vendas_mensais, 
+    x='mes_ano_str', 
+    y='valor_venda', 
+    marker='o', 
+    color='navy', 
+    linewidth=2,
+    ax=axes[1]
+)
+axes[1].set_title('Evolução do Faturamento Mensal (2023)')
+axes[1].set_ylabel('Faturamento (R$)')
+axes[1].set_xlabel('Mês')
+axes[1].tick_params(axis='x', rotation=45)
+
+plt.tight_layout()
+plt.show()
+
+
+conexao.close()
