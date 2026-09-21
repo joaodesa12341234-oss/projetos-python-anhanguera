@@ -1,0 +1,82 @@
+import sqlite3
+
+conn = sqlite3.connect('minhaloja.db')
+cursor = conn.cursor()
+create_table = """
+CREATE TABLE IF NOT EXISTS produtos(
+id INTEGER PRIMARY KEY,
+nome TEXT NOT NULL,
+preco REAL NOT NULL,
+estoque INTEGER)
+"""
+
+cursor.execute(create_table)
+conn.commit()
+conn.close()
+print('tabela de produtos criada.')
+
+
+
+#adicionar produto
+
+conn = sqlite3.connect('minhaloja.db')
+cursor = conn.cursor()
+novo_produto = ('camiseta',19.99,50)
+inserir_produto = "INSERT INTO produtos (nome,preco,estoque) VALUES (?,?,?)"
+
+cursor.execute(inserir_produto,novo_produto)
+conn.commit()
+conn.close()
+print('produto adicionado.')
+
+
+
+#READ
+
+import sqlite3
+
+conn = sqlite3.connect('minhaloja.db')
+cursor = conn.cursor()
+
+cursor.execute("SELECT * FROM produtos")
+produtos = cursor.fetchall()
+
+for produto in produtos:
+  print(produto)
+
+conn.close()
+
+
+
+#UPDATE
+
+import sqlite3
+
+conn = sqlite3.connect('minhaloja.db')
+cursor = conn.cursor()
+
+novo_preco = 27.99
+produto_id = 2
+
+cursor.execute(
+    "UPDATE Produtos SET preco = ? WHERE id = ?",(novo_preco,produto_id))
+
+conn.commit()
+conn.close()
+print('Produto atualizado.')
+
+
+
+#excluir
+
+import sqlite3
+
+conn = sqlite3.connect('minhaloja.db')
+cursor = conn.cursor()
+
+produto_id = 2
+
+cursor.execute("DELETE FROM Produtos WHERE id = ?",(produto_id,))
+conn.commit()
+conn.close()
+print('Produto excluido.')
