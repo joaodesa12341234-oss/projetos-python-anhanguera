@@ -1,0 +1,52 @@
+nome = "joao carlos de sa da silva"
+cidade = "delmiro gouveia"
+cargo = "aluno"
+habilidades = ["PYTHON","matematica","engenharia de software"]
+projeto = "sistema de vendas com banco de dados SQLITE"
+
+skills_html = "".join([
+    f'<span style="background:#3498db; color:white; padding:4px 12px; '
+    f'border-radius:20px; margin:4px; display:inline-block;">{s}</span>'
+    for s in habilidades
+])
+
+portfolio = f"""
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body      {{ font-family: Arial, sans-serif; background: #f0f4f8;
+                     margin: 0; padding: 30px; }}
+        .card     {{ max-width: 620px; margin: auto; background: white;
+                     border-radius: 12px; padding: 35px;
+                     box-shadow: 0 4px 16px rgba(0,0,0,0.1); }}
+        header    {{ border-bottom: 3px solid #3498db; padding-bottom: 15px;
+                     margin-bottom: 20px; }}
+        h1        {{ margin: 0; color: #2c3e50; font-size: 1.8em; }}
+        .cargo    {{ color: #3498db; font-weight: bold; margin-top: 4px; }}
+        .cidade   {{ color: #888; font-size: 0.9em; }}
+        h2        {{ color: #2c3e50; font-size: 1.1em; margin-top: 25px; }}
+        .projeto  {{ background: #f8f9fa; border-left: 4px solid #3498db;
+                     padding: 12px 16px; border-radius: 4px; color: #444; }}
+
+                     </style>
+</head>
+<body>
+    <div class="card">
+        <header>
+            <h1>{nome}</h1>
+            <p class="cargo">{cargo}</p>
+            <p class="cidade">📍 {cidade}</p>
+        </header>
+
+        <h2>🛠 Habilidades</h2>
+        {skills_html}
+
+        <h2>🚀 Projeto em Destaque</h2>
+        <div class="projeto">{projeto}</div>
+    </div>
+</body>
+</html>
+"""
+
+HTML(portfolio)
